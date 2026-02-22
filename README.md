@@ -1,5 +1,5 @@
-# This Repo has moved to GitLab since 24th of Oct 2023
-# [rootAVD](https://gitlab.com/newbit/rootAVD)
+# This Repo is a fork of rootAVD with stability fixes.
+### Original Source: [rootAVD](https://gitlab.com/newbit/rootAVD)
 ### [newbit @ xda-developers](https://forum.xda-developers.com/m/newbit.1350876)
 A Script to...
 * root your Android Studio Virtual Device (AVD), with Magisk (Stable, Canary or Alpha)
@@ -11,9 +11,8 @@ A Script to...
 ...within seconds.
 
 ## Install Magisk
-### Download rootAVD via
-* [Click](https://gitlab.com/newbit/rootAVD/-/archive/master/rootAVD-master.zip)
-* `git clone https://gitlab.com/newbit/rootAVD.git`
+### Download rootAVD via Git
+`git clone https://github.com/brianwalczak/rootAVD.git`
 
 ### Preconditions
 * the AVD is running
@@ -383,6 +382,12 @@ rootAVD.bat system-images\android-25\google_apis_playstore\armeabi-v7a\ramdisk.i
 </details>
 
 ### Change Logs
+#### [Feb 2025] (This fork)
+* [rootAVD.bat] - Fixed file renaming from `.ap` to `.apk`
+* [rootAVD.bat] - Fixed `adb` installation check [(issue)](https://gitlab.com/newbit/rootAVD/-/issues/114)
+* [rootAVD.bat] - Fixed file renaming from `.s` and `.zi` to `.sh` and `.zip` [(issue)](https://gitlab.com/newbit/rootAVD/-/issues/113)
+* [General] - Updated to Magisk v30.6
+
 #### [Oct 2024]
 * [rootAVD.sh] - Added Support for LD_PRELOAD of init
 * [General] - Updated to Magisk v26.4
