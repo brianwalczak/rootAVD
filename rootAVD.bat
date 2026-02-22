@@ -4,7 +4,7 @@ set true=1==1
 set false=1==0
 
 REM ##########################################################################################
-REM #
+REM # rootAVD.bat - A Script to root Android Studio AVDs
 REM # Magisk Boot Image Patcher - original created by topjohnwu and modded by shakalaca's
 REM # modded by NewBit XDA for Android Studio AVD
 REM # Successfully tested on Android API:
@@ -84,11 +84,12 @@ IF %InstallApps% (
 	call :installapps && exit /B 0
 )
 
-set ADBWORKDIR=/data/data/com.android.shell
-set ADBBASEDIR=%ADBWORKDIR%/Magisk
-echo [-] In any AVD via ADB, you can execute code without root in /data/data/com.android.shell
 
-call :TestADBWORKDIR
+REM Force use of /data/local/tmp for API 30+ (Android 11+) due to new security restrictions
+REM You can adjust this check if you want to support older versions differently
+set ADBWORKDIR=/data/local/tmp
+set ADBBASEDIR=%ADBWORKDIR%/Magisk
+echo [-] Using %ADBWORKDIR% for all ADB operations (recommended for API 30+)
 
 REM change to ROOTAVD directory
 cd %ROOTAVD%
@@ -127,8 +128,19 @@ IF %RAMDISKIMG% (
 	)
 )
 
+echo [-] run the actually Boot/Ramdisk/Kernel Image Patch Script
+echo [*] from Magisk by topjohnwu and modded by NewBit XDA
+
 echo [-] Copy rootAVD Script into Magisk DIR
 adb push rootAVD.sh %ADBBASEDIR%
+
+REM Fix possible filename truncation on AVD (Magisk.zi/rootAVD.s)
+adb shell "if [ -f %ADBBASEDIR%/Magisk.zi ]; then mv %ADBBASEDIR%/Magisk.zi %ADBBASEDIR%/Magisk.zip; fi"
+adb shell "if [ -f %ADBBASEDIR%/rootAVD.s ]; then mv %ADBBASEDIR%/rootAVD.s %ADBBASEDIR%/rootAVD.sh; fi"
+adb shell chmod 755 %ADBBASEDIR%/rootAVD.sh
+
+REM Confirm files exist before running
+adb shell "ls %ADBBASEDIR%/Magisk.zip && ls %ADBBASEDIR%/rootAVD.sh"
 
 echo [-] run the actually Boot/Ramdisk/Kernel Image Patch Script
 echo [*] from Magisk by topjohnwu and modded by NewBit XDA
