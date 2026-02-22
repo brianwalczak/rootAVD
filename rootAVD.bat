@@ -504,6 +504,13 @@ exit /B 0
 :installapps
 	SetLocal EnableDelayedExpansion
 	echo [-] Install all APKs placed in the Apps folder
+	REM Rename any .ap files to .apk
+	for %%f in (APPS\*.ap) do (
+		if exist "%%f" (
+			ren "%%f" "%%~nf.apk"
+			echo [^^!] Renamed %%f to %%~nf.apk
+		)
+	)
 	for %%i in (APPS\*.apk) do (
 		set APK=%%i
 		:whileloop
