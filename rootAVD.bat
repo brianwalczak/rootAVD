@@ -404,7 +404,7 @@ exit /B 0
 
 			IF EXIST "!ADB_EX!" (
 				echo [*] setting it, just during this session, for you
-				set "PATH=%ANDROIDHOME%!ADB_DIR!;%PATH%"
+				set "PATH="!ANDROIDHOME!!ADB_DIR!";%PATH%"
 				REM goto :TestADB
 				call :TestADB
 			)
